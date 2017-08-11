@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Elvis Menezes - Portfolio </title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lobster" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	<style>
+	h1{
+  font-family:'Rock Salt', cursive;
+  color:white;
+  border:2px;
+}
+
+.well{
+  height:300px;
+  width:1200px;
+  box-shadow:3px 3px 4px black;
+}
+ 
+.text-3d:hover{
+  animation: text3d 200ms infinite;
+}
+
+.btn{
+  font-size:18px;
+}
+
+@keyframes text3d {
+   0% {
+    text-shadow: 5px 4px $blackColor, -5px -6px $blueColor;
+  }
+  25% {
+    text-shadow: -5px -6px $blackColor, 5px 4px $blueColor;
+  }
+  50% {
+    text-shadow: 5px -4px $blackColor, -8px 4px $blueColor;
+  }
+  75% {
+    text-shadow: -8px -4px $blackColor, -5px -4px $blueColor;
+  }
+  100% {
+    text-shadow: -5px 0 $blackColor, 5px -4px $blueColor;
+  }
+}
+	</style>
+	
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lobster" />
+</head>
+<body>
+<div class="container" id="content">
+  <div class="row text-center">
+    <h1 class="text-3d"style="margin-top:1cm;">Random Quote Generator</h1>
+    <div class="well col-xs-12" style="margin-top:1cm">
+      <h2 id="quote"style="margin-top:2cm">Click the button below to get a quote today!!!</h2>
+    </div>
+  </div>
+  
+    <div class="col-xs-12 row text-center"style="margin-top:0.5cm">
+    <button id="getQuote" class="btn">New Quote</button>
+    
+    <button class="btn">  <a id="tweetIt" href="#" target="_blank"><i class="fa fa-twitter">Tweet it!</i></a></button>
+  
+  </div>
+</div>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<script>
+var colors = ['#16a085', '#27ae60', '#2c3e50', '#f39c12', '#e74c3c', '#9b59b6', '#FB6964', '#342224', "#472E32", "#BDBB99", "#77B1A9", "#73A857"];
+
+function randomQuote() {
+  $.ajax({
+      url: "https://api.forismatic.com/api/1.0/?",
+      dataType: "jsonp",
+      data: "method=getQuote&format=jsonp&lang=en&jsonp=?",
+      success: function( response ) {
+        $("#quote").html("<h2 id='quote'>" +
+          response.quoteText + "<br/>&dash; " + response.quoteAuthor + " &dash;</h2>");
+        $("#tweetIt").attr("href", "https://twitter.com/home/?status=" + response.quoteText +
+          ' (' + response.quoteAuthor + ')');
+    var color = Math.floor(Math.random() * colors.length);  
+      $("html body").animate({
+        backgroundColor: colors[color],
+      }, 1000);
+      $("button").animate({
+        color: colors[color]
+      }, 1000);
+         $("h2").animate({
+        color: colors[color]
+      }, 1000);
+      }
+  });
+}
+
+$(function() {
+  randomQuote();
+});
+
+$("button").click(function(){
+  randomQuote();
+});
+
+</script>
+</html>
